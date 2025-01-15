@@ -1,0 +1,5 @@
+[wokwi]
+version = 1
+firmware = 'build/keypad_1.uf2'
+elf = 'build/keypad_1.elf'
+gdbServerPort=3333

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "author": "Prof. Tiago Façanha",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-pi-pico-w",
+      "id": "pico",
+      "top": -108.85,
+      "left": 339.55,
+      "attrs": { "builder": "pico-sdk" }
+    },
+    { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -146, "left": -23.2, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": 51.95,
+      "left": 451.2,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 15.6,
+      "left": 532.2,
+      "attrs": { "color": "red", "flip": "1" }
+    }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "keypad1:C4", "pico:GP1", "green", [ "v19.2", "h105.3", "v-297.6" ] ],
+    [ "keypad1:C3", "pico:GP2", "green", [ "v28.8", "h124.65", "v-96" ] ],
+    [ "keypad1:C2", "pico:GP3", "green", [ "v38.4", "h144", "v-19.2" ] ],
+    [ "keypad1:C1", "pico:GP4", "green", [ "v48", "h163.1", "v-9.6" ] ],
+    [ "keypad1:R4", "pico:GP5", "green", [ "v57.6", "h182.2", "v-278.4" ] ],
+    [ "keypad1:R3", "pico:GP6", "green", [ "v67.2", "h201.3", "v-9.6" ] ],
+    [ "keypad1:R2", "pico:GP7", "green", [ "v76.8", "h220.4", "v-268.8" ] ],
+    [ "keypad1:R1", "pico:GP8", "green", [ "v86.4", "h240", "v-28.8" ] ],
+    [ "r4:2", "led1:A", "green", [ "v0" ] ],
+    [ "pico:GND.4", "led1:C", "black", [ "h-19.2", "v57.64", "h268.8", "v-67.2" ] ],
+    [ "pico:GP18", "r4:1", "green", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}
