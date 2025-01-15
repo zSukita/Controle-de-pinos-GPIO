@@ -20,9 +20,8 @@
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": 277.6,
-      "left": -56.2,
-      "rotate": 270,
+      "top": 44.4,
+      "left": 138.2,
       "attrs": { "color": "green" }
     },
     {
@@ -35,9 +34,8 @@
     {
       "type": "wokwi-led",
       "id": "led2",
-      "top": 296.8,
-      "left": -56.2,
-      "rotate": 270,
+      "top": 44.4,
+      "left": 234.2,
       "attrs": { "color": "blue" }
     },
     {
@@ -47,14 +45,7 @@
       "left": 0,
       "attrs": { "value": "1000" }
     },
-    {
-      "type": "wokwi-led",
-      "id": "led3",
-      "top": 316,
-      "left": -56.2,
-      "rotate": 270,
-      "attrs": { "color": "red" }
-    },
+    { "type": "wokwi-led", "id": "led3", "top": 44.4, "left": 186.2, "attrs": { "color": "red" } },
     {
       "type": "wokwi-resistor",
       "id": "r3",
@@ -65,8 +56,8 @@
     {
       "type": "wokwi-buzzer",
       "id": "bz1",
-      "top": 165.6,
-      "left": 251.4,
+      "top": 184.8,
+      "left": 328.2,
       "attrs": { "volume": "0.1" }
     }
   ],
@@ -75,13 +66,10 @@
     [ "pico:GP1", "$serialMonitor:TX", "", [] ],
     [ "led1:C", "pico:GND.4", "black", [ "h7.2", "v12" ] ],
     [ "led1:A", "r1:1", "green", [ "h0" ] ],
-    [ "pico:GP11", "r1:2", "green", [ "h0" ] ],
     [ "led2:A", "r2:1", "green", [ "h0" ] ],
     [ "led3:A", "r3:1", "green", [ "h0" ] ],
     [ "led2:C", "pico:GND.4", "black", [ "h0" ] ],
     [ "led3:C", "pico:GND.4", "black", [ "h9.6", "v-19.6" ] ],
-    [ "r2:2", "pico:GP12", "green", [ "h8.4", "v-9.6", "h19.2" ] ],
-    [ "r3:2", "pico:GP13", "green", [ "h18", "v-19.24" ] ],
     [ "pico:GP21", "bz1:2", "red", [ "h0" ] ],
     [ "pico:GND.6", "bz1:1", "black", [ "h0" ] ],
     [ "keypad1:R1", "pico:GP2", "green", [ "v0" ] ],
@@ -91,7 +79,10 @@
     [ "keypad1:C1", "pico:GP6", "green", [ "v0" ] ],
     [ "keypad1:C2", "pico:GP7", "green", [ "v0" ] ],
     [ "keypad1:C3", "pico:GP8", "green", [ "v0" ] ],
-    [ "keypad1:C4", "pico:GP9", "green", [ "v0" ] ]
+    [ "keypad1:C4", "pico:GP9", "green", [ "v0" ] ],
+    [ "r1:2", "pico:GP11", "green", [ "v0" ] ],
+    [ "r2:2", "pico:GP12", "green", [ "v0" ] ],
+    [ "r3:2", "pico:GP13", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }
