@@ -10,3 +10,6 @@ void imprimir_binario(int num) {
     }
 }
 
+int main() {
+    
+}
