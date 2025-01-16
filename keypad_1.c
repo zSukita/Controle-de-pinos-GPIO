@@ -31,7 +31,7 @@ void init_hardware() {
     // Configuração do buzzer como saída
     gpio_init(GPIO_BUZZER);
     gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
-
+}
 
 int main() {
     char caracter_press;
