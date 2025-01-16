@@ -3,9 +3,9 @@
 #include "hardware/timer.h"
 
 // Definição dos pinos GPIO
-#define GPIO_LED_BLUE 11
-#define GPIO_LED_RED 12
-#define GPIO_LED_GREEN 13
+#define GPIO_LED_GREEN 11
+#define GPIO_LED_BLUE 12
+#define GPIO_LED_RED 13
 #define GPIO_BUZZER 21
 
 uint columns[4] = {6, 7, 8, 9}; 
@@ -34,21 +34,41 @@ void init_hardware() {
 }
 
 int main() {
+    stdio_init_all();
+    init_hardware();
+
     char caracter_press;
 
     while (true) {
+        //Laço de repetição para que ao manter pressionado as teclas A, B, C e D os leds acendam, já o # é para ligar o buzzer
         if (caracter_press == 'A') {
-            //led
-        } else if (caracter_press == 'B') {
-            //led
-        } else if (caracter_press == 'C') {
-           //led
-        } else if (caracter_press == 'D') {
-            //3leds
-        } else if (caracter_press == '1') {
-            //buzzer
-        } else {
-            //desligar leds e buzzer
+            gpio_put(GPIO_LED_GREEN, 1);
+        }
+
+        else if (caracter_press == 'B') {
+            gpio_put(GPIO_LED_BLUE, 1);
+        } 
+
+        else if (caracter_press == 'C') {
+           gpio_put(GPIO_LED_RED, 1);
+        } 
+
+        else if (caracter_press == 'D') {
+            gpio_put(GPIO_LED_GREEN, 1);
+            gpio_put(GPIO_LED_BLUE, 1);
+            gpio_put(GPIO_LED_RED, 1);
+        }
+
+        else if (caracter_press == '#') {
+            gpio_put(GPIO_BUZZER, 1);
+            sleep_ms(500);
+        } 
+        //Desliga os leds e o buzzer
+        else {
+            gpio_put(GPIO_LED_GREEN, 0);
+            gpio_put(GPIO_LED_BLUE, 0);
+            gpio_put(GPIO_LED_RED, 0);
+            gpio_put(GPIO_BUZZER, 0);
         }
     }
 }
