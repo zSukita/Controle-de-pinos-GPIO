@@ -2,6 +2,14 @@
 #include "pico/stdlib.h"
 #include "hardware/timer.h"
 
+// Definição dos pinos GPIO
+#define GPIO_LED_BLUE 11
+#define GPIO_LED_RED 12
+#define GPIO_LED_GREEN 13
+#define GPIO_BUZZER 21
+
+uint columns[4] = {6, 7, 8, 9}; 
+uint rows[4] = {2, 3, 4, 5};
 
 void imprimir_binario(int num) {
     int i;
@@ -9,6 +17,21 @@ void imprimir_binario(int num) {
         (num & (1 << i)) ? printf("1") : printf("0");
     }
 }
+
+// Função para inicializar o hardware e configurar os pinos GPIO
+void init_hardware() {
+    // Configuração dos LEDs como saída
+    gpio_init(GPIO_LED_BLUE);
+    gpio_set_dir(GPIO_LED_BLUE, GPIO_OUT);
+    gpio_init(GPIO_LED_RED);
+    gpio_set_dir(GPIO_LED_RED, GPIO_OUT);
+    gpio_init(GPIO_LED_GREEN);
+    gpio_set_dir(GPIO_LED_GREEN, GPIO_OUT);
+    
+    // Configuração do buzzer como saída
+    gpio_init(GPIO_BUZZER);
+    gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
+
 
 int main() {
     char caracter_press;
