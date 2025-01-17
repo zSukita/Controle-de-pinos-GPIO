@@ -41,7 +41,7 @@ pico_set_program_name(keypad_1 "keypad_1")
 pico_set_program_version(keypad_1 "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(keypad_1 0)
+pico_enable_stdio_uart(keypad_1 1)
 pico_enable_stdio_usb(keypad_1 1)
 
 # Add the standard library to the build
