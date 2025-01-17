@@ -12,6 +12,12 @@ void keypad_init()
   // define o nível lógico das saídas (linhas)
   gpio_put_masked((0xF << 2), (0x0 << 2));
 
+  // define as colunas como pull down
+  gpio_pull_down(6); // GPIO6
+  gpio_pull_down(5); // GPIO7
+  gpio_pull_down(8); // GPIO8
+  gpio_pull_down(9); // GPIO9
+
   //
   printf("estado das GPIOs: ");
   for (size_t a = 2; a < 10; a++)
@@ -22,6 +28,16 @@ void keypad_init()
   for (size_t a = 2; a < 10; a++)
   {
     printf("%d", gpio_get_dir(a));
+  }
+  printf("\nGPIOs que são pulled down: ");
+  for (size_t a = 2; a < 10; a++)
+  {
+    printf("%d", gpio_is_pulled_down(a));
+  }
+  printf("\nGPIOs que são pulled up: ");
+  for (size_t a = 2; a < 10; a++)
+  {
+    printf("%d", gpio_is_pulled_up(a));
   }
   printf("\n");
 }
