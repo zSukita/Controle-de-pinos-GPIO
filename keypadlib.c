@@ -9,6 +9,9 @@ void keypad_init()
   // define as linhas (rows) como saída - GPIOs de 2 à 5
   gpio_set_dir_out_masked((0xF << 2));
 
+  // define o nível lógico das saídas (linhas)
+  gpio_put_masked((0xF << 2), (0x0 << 2));
+
   //
   printf("estado das GPIOs: ");
   for (size_t a = 2; a < 10; a++)
