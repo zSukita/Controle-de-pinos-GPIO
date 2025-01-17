@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/timer.h"
+#include "keypadlib.h"
 
 // Definição dos pinos GPIO
 #define GPIO_LED_GREEN 11
@@ -36,6 +37,8 @@ void init_hardware() {
 int main() {
     stdio_init_all();
     init_hardware();
+
+keypad_init();
 
     char caracter_press;
 

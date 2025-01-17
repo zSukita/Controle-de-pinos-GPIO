@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(keypad_1 keypad_1.c )
+add_executable(keypad_1 keypad_1.c keypadlib.c)
 
 pico_set_program_name(keypad_1 "keypad_1")
 pico_set_program_version(keypad_1 "0.1")
