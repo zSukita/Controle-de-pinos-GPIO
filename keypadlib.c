@@ -5,6 +5,7 @@
 #define GPIO_STARTER_PIN 2
 #define NUM_ROWS 4
 
+static uint32_t keypad;
 static int key = -1;
 static uint scancodes[NUM_ROWS] = {0x01, 0x02, 0x04, 0x08};
 
@@ -46,7 +47,12 @@ int keypad_reader(uint8_t *keymap)
   for (key = 0; key < NUM_ROWS; key++)
   {
     // define o nível 1 em todas as entradas e saídas - rows and columns
-    gpio_put_masked((0xF << GPIO_STARTER_PIN), (scancodes[key] << GPIO_STARTER_PIN)); 
+    gpio_put_masked((0xF << GPIO_STARTER_PIN), (scancodes[key] << GPIO_STARTER_PIN));
+
+    sleep_ms(15); // ajuste debouncing
+
+    // ler o valor do keymap
+    keypad = ((gpio_get_all() >> GPIO_STARTER_PIN) & 0xFF);
   }
   return -1;
 }
