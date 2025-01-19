@@ -3,6 +3,10 @@
 
 // referente a primeira GPIO destinada ao teclado, localizada no pino 2
 #define GPIO_STARTER_PIN 2
+#define NUM_ROWS 4
+
+static int key = -1;
+static uint scancodes[NUM_ROWS] = {0x01, 0x02, 0x04, 0x08};
 
 void keypad_init()
 {
@@ -21,18 +25,28 @@ void keypad_init()
   gpio_pull_down(8); // GPIO8
   gpio_pull_down(9); // GPIO9
 
-    //========================================== DEBUGGING
-    // printf("Estado das GPIOs: ");
-    // for (size_t a = 2; a < 10; a++)
-    //     printf("%d", gpio_get(a));
-    // printf("\nGPIOs que são pulled down: ");
-    // for (size_t a = 2; a < 10; a++)
-    //     printf("%d", gpio_is_pulled_down(a));
-    // printf("\nGPIOs que são pulled up: ");
-    // for (size_t a = 2; a < 10; a++)
-    //     printf("%d", gpio_is_pulled_up(a));
-    // printf("\nDireção das GPIOs: ");
-    // for (size_t a = 2; a < 10; a++)
-    //     printf("%d", gpio_get_dir(a));
-    // printf("\n");
+  //========================================== DEBUGGING
+  // printf("Estado das GPIOs: ");
+  // for (size_t a = 2; a < 10; a++)
+  //     printf("%d", gpio_get(a));
+  // printf("\nGPIOs que são pulled down: ");
+  // for (size_t a = 2; a < 10; a++)
+  //     printf("%d", gpio_is_pulled_down(a));
+  // printf("\nGPIOs que são pulled up: ");
+  // for (size_t a = 2; a < 10; a++)
+  //     printf("%d", gpio_is_pulled_up(a));
+  // printf("\nDireção das GPIOs: ");
+  // for (size_t a = 2; a < 10; a++)
+  //     printf("%d", gpio_get_dir(a));
+  // printf("\n");
+}
+
+int keypad_reader(uint8_t *keymap)
+{
+  for (key = 0; key < NUM_ROWS; key++)
+  {
+    // define o nível 1 em todas as entradas e saídas - rows and columns
+    gpio_put_masked((0xF << GPIO_STARTER_PIN), (scancodes[key] << GPIO_STARTER_PIN)); 
+  }
+  return -1;
 }
