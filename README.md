@@ -1,86 +1,107 @@
-# -Controle-de-pinos-GPIO
+<h1 align = "center">Controle de pinos GPIO com o 
+emprego de um teclado matricial</h1>
 
-# -Com o auxílio do simulador de eletrônica Wokwi, utilize um 
-teclado matricial 4x4 (ilustrado na Figura 1) para controlar 
-determinados pinos GPIO do microcontrolador RP2040, 
-presente na placa de desenvolvimento Raspberry Pi Pico W. 
-Para esta atividade, realize o acionamento de 03 LEDs (tipo 
-RGB), juntamente com o controle do sinal sonoro de um buzzer. 
-Nesta prática, será necessário simular os seguintes 
-componentes: 
-1) Teclado matricial 4x4. 
-2) 03 LEDs – tipo RGB. 
-3) Componente Buzzer. 
-4) Microcontrolador Raspberry Pi Pico W. 
+<p align = "center">O objetivo deste projeto é desenvolver um sistema interativo utilizando o microcontrolador Raspberry Pi Pico, um teclado matricial 4x4, LEDs e um buzzer. A proposta é integrar os componentes de forma programável para que diferentes teclas acionem funcionalidades específicas, como o acionamento de LEDs e do buzzer.</p>
 
+## Características
 
-
-# Teclado e LEDs com Raspberry Pi Pico
-
-Este projeto implementa o controle de LEDs e de um buzzer utilizando um teclado matricial conectado a um Raspberry Pi Pico. Dependendo da tecla pressionada, diferentes LEDs são acesos ou o buzzer é ativado.
-
-## Recursos
-- Controle de LEDs (verde, azul, vermelho) usando GPIOs.
-- Ativação de um buzzer com a tecla `#`.
-- Mapeamento e leitura de um teclado matricial 4x4.
+- Leitura de teclado matricial 4x4
+- Controle de 3 LEDs (Verde, Azul e Vermelho)
+- Sistema de buzzer para feedback sonoro
+- Interface de depuração via serial
 
 ## Hardware Necessário
-- Raspberry Pi Pico
-- Teclado matricial 4x4
-- 3 LEDs (verde, azul, vermelho)
-- Resistores (220 Ω recomendados para os LEDs)
-- 1 Buzzer
-- Protoboard e fios para conexão
 
-## Conexões de Hardware
+- Raspberry Pi Pico
+- Teclado Matricial 4x4
+- 3 LEDs (Verde, Azul e Vermelho)
+- 1 Buzzer
+- Resistores para os LEDs (conforme especificação dos LEDs utilizados)
+- Jumpers para conexão
+
+## Pinagem
 
 ### Teclado Matricial
-- **Linhas:** GPIO2, GPIO3, GPIO4, GPIO5
-- **Colunas:** GPIO6, GPIO7, GPIO8, GPIO9
+- Colunas: GPIO 6, 7, 8, 9
+- Linhas: GPIO 2, 3, 4, 5
 
 ### LEDs
-- **LED Verde:** GPIO11
-- **LED Azul:** GPIO12
-- **LED Vermelho:** GPIO13
+- LED Verde: GPIO 11
+- LED Azul: GPIO 12
+- LED Vermelho: GPIO 13
 
 ### Buzzer
-- **Buzzer:** GPIO21
+- GPIO 21
 
-## Compilação e Execução
+## Funcionalidades
 
-### Requisitos
-- [SDK do Raspberry Pi Pico](https://github.com/raspberrypi/pico-sdk) configurado
-- Compilador `cmake` e `make`
+O sistema possui as seguintes funcionalidades através das teclas:
 
-### Passos
-1. Clone ou copie o código para o seu ambiente de desenvolvimento:
-   ```bash
-   git clone https://github.com/seuprojeto/repo.git
-   cd repo
-   ```
+- Tecla 'A': Acende o LED Verde
+- Tecla 'B': Acende o LED Azul
+- Tecla 'C': Acende o LED Vermelho
+- Tecla 'D': Acende todos os LEDs
+- Tecla '#': Ativa o buzzer por 500ms
 
-2. Configure o SDK do Pico:
-   ```bash
-   export PICO_SDK_PATH=/caminho/para/pico-sdk
-   ```
+## Mapa do Teclado
 
-3. Compile o projeto:
-   ```bash
-   mkdir build
-   cd build
-   cmake ..
-   make
-   ```
+```
+| 1 | 2 | 3 | A |
+| 4 | 5 | 6 | B |
+| 7 | 8 | 9 | C |
+| * | 0 | # | D |
+```
 
-4. Copie o arquivo `.uf2` gerado para o Raspberry Pi Pico conectado ao seu computador.
+## Como Compilar e Executar
 
-## Funcionamento
+1. Configure o ambiente de desenvolvimento do Raspberry Pi Pico conforme a documentação oficial
+2. Clone este repositório
+3. Compile o projeto usando o CMake:
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+4. Copie o arquivo `.uf2` gerado para o Raspberry Pi Pico em modo de bootloader
 
-1. **Teclas Especiais:**
-   - `A`: Liga o LED verde.
-   - `B`: Liga o LED azul.
-   - `C`: Liga o LED vermelho.
-   - `D`: Liga todos os LEDs.
-   - `#`: Ativa o buzzer por 500 ms.
+## Estrutura do Código
 
-2. **Reset:** Pressionar qualquer tecla diferente das mencionadas acima desliga todos os LEDs e o buzzer.
+O código está organizado da seguinte forma:
+
+- `init_hardware()`: Inicializa todos os GPIOs e configurações necessárias
+- `keypad_get_key()`: Realiza a leitura do teclado matricial
+- `beep()`: Controla o buzzer
+- `init_keypad_masks()`: Configura as máscaras de bits para leitura do teclado
+- `main()`: Loop principal do programa
+
+## Customização
+
+### Ajustando o Tom do Buzzer
+
+Para modificar a frequência do som emitido pelo buzzer, ajuste os valores de `sleep_us()` na função `beep()`:
+- Valores menores produzem sons mais agudos
+- Valores maiores produzem sons mais graves
+
+Por exemplo:
+```c
+sleep_us(250);  // Som mais agudo
+sleep_us(1000); // Som mais grave
+```
+
+## Depuração
+
+O sistema inclui uma função de depuração `imprimir_binario()` que pode ser utilizada para verificar os estados dos pinos em formato binário através da saída serial.
+
+## Limitações
+
+- O sistema não suporta pressionamento simultâneo de múltiplas teclas
+- O debounce é implementado através de delays simples
+
+## Colaboradores
+
+- Andressa Martins Santana Santos <br>
+- Camille Rodrigues Costa <br>
+- Erick dos Santos Rezende <br>
+- Jobson Ressureição de Almeida <br>
+- Lucas Silva de Souza <br>
