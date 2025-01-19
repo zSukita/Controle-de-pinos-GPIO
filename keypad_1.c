@@ -24,6 +24,17 @@ char KEY_MAP[16] = {
 uint all_columns_mask = 0x0;
 uint column_mask[4];
 
+// Função para fazer o buzzer tocar
+void beep(int duration_ms) {
+    absolute_time_t end_time = make_timeout_time_ms(duration_ms);
+    while (absolute_time_diff_us(get_absolute_time(), end_time) > 0) {
+        gpio_put(GPIO_BUZZER, 1);
+        sleep_us(500);  // Meio período em nível alto
+        gpio_put(GPIO_BUZZER, 0);
+        sleep_us(500);  // Meio período em nível baixo
+    }
+}
+
 // Função para imprimir valor binário (depuração)
 void imprimir_binario(int num)
 {
@@ -171,6 +182,7 @@ int main()
             else if (caracter_press == '#')
             {
                 gpio_put(GPIO_BUZZER, 1);
+                beep(500);  // Toca o buzzer por 500ms
                 sleep_ms(500);
             }
         }
