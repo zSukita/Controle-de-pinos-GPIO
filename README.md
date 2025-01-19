@@ -98,6 +98,12 @@ O sistema inclui uma função de depuração `imprimir_binario()` que pode ser u
 - O sistema não suporta pressionamento simultâneo de múltiplas teclas
 - O debounce é implementado através de delays simples
 
+
+##  Video demonstrando o funcionamento do programa.
+
+Link: https://drive.google.com/file/d/1vDLz_cXycE_5AGzxS8sOjUuEuvlFbahO/view
+
+
 ## Colaboradores
 
 - Andressa Martins Santana Santos <br>
