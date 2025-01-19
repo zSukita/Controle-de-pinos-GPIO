@@ -261,6 +261,7 @@ int main()
                 gpio_put(GPIO_BUZZER, 0);
                 gpio_put(GPIO_BUZZER, 0);
             }
+            //break; //DEBUGGING
         }
     }
 }
