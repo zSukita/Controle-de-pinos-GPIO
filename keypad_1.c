@@ -221,13 +221,39 @@ int main()
                 switch (key)
                 {
                 case 10:
+                    gpio_put(GPIO_LED_GREEN, 1);
+                    sleep_ms(100);
                     break;
+                case 11:
+                    gpio_put(GPIO_LED_BLUE, 1);
+                    sleep_ms(100);
+                    break;
+                case 12:
+                    gpio_put(GPIO_LED_RED, 1);
+                    sleep_ms(100);
+                    break;
+                case 13:
+                    gpio_put(GPIO_LED_GREEN, 1);
+                    gpio_put(GPIO_LED_BLUE, 1);
+                    gpio_put(GPIO_LED_RED, 1);
+                    sleep_ms(100);
+                    break;
+                case 15:
+                    gpio_put(GPIO_BUZZER, 1);
+                    beep(500); // Toca o buzzer por 500ms
+                    sleep_ms(500);
                 default:
                     break;
                 }
             }
             else
             {
+                gpio_put(GPIO_LED_GREEN, 0);
+                gpio_put(GPIO_LED_BLUE, 0);
+                gpio_put(GPIO_LED_RED, 0);
+                gpio_put(GPIO_BUZZER, 0);
+                gpio_put(GPIO_BUZZER, 0);
             }
         }
     }
+}
