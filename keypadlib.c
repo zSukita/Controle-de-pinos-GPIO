@@ -17,7 +17,7 @@ void keypad_init()
 
   // define as colunas como pull down
   gpio_pull_down(6); // GPIO6
-  gpio_pull_down(5); // GPIO7
+  gpio_pull_down(7); // GPIO7
   gpio_pull_down(8); // GPIO8
   gpio_pull_down(9); // GPIO9
 
