@@ -9,6 +9,8 @@
 #define GPIO_LED_RED 13
 #define GPIO_BUZZER 21
 
+uint use_library = 1;
+
 uint columns[4] = {6, 7, 8, 9};
 uint rows[4] = {2, 3, 4, 5};
 
