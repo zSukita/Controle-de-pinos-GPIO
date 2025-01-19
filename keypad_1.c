@@ -149,7 +149,7 @@ int main()
         {
             printf("Tecla pressionada: %c\n", caracter_press);
 
-            // Laço de repetição para que ao manter pressionado as teclas A, B, C e D os leds acendam, já o # é para ligar o buzzer
+            // Laço de repetição para que ao manter pressionado as teclas A, B, C e D os LEDs acendam, já o # é para ligar o buzzer
             if (caracter_press == 'A')
             {
                 gpio_put(GPIO_LED_GREEN, 1);
@@ -173,15 +173,19 @@ int main()
                 gpio_put(GPIO_BUZZER, 1);
                 sleep_ms(500);
             }
-            else
-            {
-                // Desligar todos os LEDs e o buzzer
-                gpio_put(GPIO_LED_GREEN, 0);
-                gpio_put(GPIO_LED_BLUE, 0);
-                gpio_put(GPIO_LED_RED, 0);
-                gpio_put(GPIO_BUZZER, 0);
-            }
         }
+        else
+        {
+            // Desligar todos os LEDs e o buzzer se nenhuma tecla estiver pressionada
+            gpio_put(GPIO_LED_GREEN, 0);
+            gpio_put(GPIO_LED_BLUE, 0);
+            gpio_put(GPIO_LED_RED, 0);
+            gpio_put(GPIO_BUZZER, 0);
+        }
+
         busy_wait_us(500000); // Pequeno atraso entre leituras
-    }
+    } 
+
+    
 }
+
