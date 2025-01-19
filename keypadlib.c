@@ -7,6 +7,7 @@
 
 static uint32_t keypad;
 static int key = -1;
+static uint keypress = 0xF0;
 static uint scancodes[NUM_ROWS] = {0x01, 0x02, 0x04, 0x08};
 
 void keypad_init()
@@ -53,6 +54,17 @@ int keypad_reader(uint8_t *keymap)
 
     // ler o valor do keymap
     keypad = ((gpio_get_all() >> GPIO_STARTER_PIN) & 0xFF);
+
+    // interrompe o loop quando uma tecla é pressionada
+    if (keypad & keypress)
+    {
+      // DEBUGGING: Retorna a posição na matriz da tecla pressionada
+      //           caso a soma entre os binários - keypad e keypress - seja 1
+      // printf("[keypress] %b & %08b [COL/ROW]\n", keypress, keypad);
+      // printf("[KEYPAD] %b\n", keypad);
+      break;
+    }
   }
+
   return -1;
 }
