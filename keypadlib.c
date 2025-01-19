@@ -1,9 +1,9 @@
 #include "pico/stdlib.h"
 #include <stdio.h>
 
-// referente a primeira GPIO destinada ao teclado, localizada no pino 2
-#define GPIO_STARTER_PIN 2
+#define GPIO_STARTER_PIN 2 // referente a primeira GPIO destinada ao teclado, localizada no pino 2
 #define NUM_ROWS 4
+#define NUM_KEYS 16
 
 static uint32_t keypad;
 static int key = -1;
@@ -64,7 +64,31 @@ int keypad_reader(uint8_t *keymap)
       // printf("[KEYPAD] %b\n", keypad);
       break;
     }
+
+    // se tiver pressionado uma tecla
+    if (keypad & keypress)
+    {
+      // validar o keymap.
+      for (key = 0; key < NUM_KEYS; key++)
+      {
+        // printf("%x\n",keymap[key]);//DEBUGGING
+        if (keypad == keymap[key])
+        {
+          // printf("%x\n",keypad);//DEBUGGING
+          break; // finaliza o laço quando encontra correspondência da tecla
+        }
+      }
+      //  valor do keymap inválido
+      if (key == NUM_KEYS)
+      {
+        return -1;
+      }
+    }
+    // contramedida para tecla não pressionada
+    else
+      return -1;
   }
 
-  return -1;
+  sleep_ms(30); // ajuste debouncing
+  return key;
 }
