@@ -150,6 +150,8 @@ void init_hardware()
 int main()
 {
     stdio_init_all();
+    // mapeamento do teclado em hexadecimal
+    uint8_t keymap[16] = {0x28, 0x11, 0x21, 0x41, 0x12, 0x22, 0x42, 0x14, 0x24, 0x44, 0x81, 0x82, 0x84, 0x88, 0x18, 0x48};
     init_hardware();
 
     if (!use_library)
@@ -206,6 +208,26 @@ int main()
     }
     else
     {
-        //
+        int key;
+
+        while (true)
+        {
+            key = keypad_reader(keymap);
+            if (key != -1)
+            {
+                printf("Tecla pressionada: %d\n", key);
+                sleep_ms(100); // ajuste deboucing
+
+                switch (key)
+                {
+                case 10:
+                    break;
+                default:
+                    break;
+                }
+            }
+            else
+            {
+            }
+        }
     }
-}
