@@ -21,25 +21,18 @@ void keypad_init()
   gpio_pull_down(8); // GPIO8
   gpio_pull_down(9); // GPIO9
 
-  // printf("estado das GPIOs: ");
-  // for (size_t a = GPIO_STARTER_PIN; a < 10; a++)
-  // {
-  //   printf("%d", gpio_get(a));
-  // }
-  // printf("\ndireção das GPIOs: ");
-  // for (size_t a = GPIO_STARTER_PIN; a < 10; a++)
-  // {
-  //   printf("%d", gpio_get_dir(a));
-  // }
-  // printf("\nGPIOs que são pulled down: ");
-  // for (size_t a = GPIO_STARTER_PIN; a < 10; a++)
-  // {
-  //   printf("%d", gpio_is_pulled_down(a));
-  // }
-  // printf("\nGPIOs que são pulled up: ");
-  // for (size_t a = GPIO_STARTER_PIN; a < 10; a++)
-  // {
-  //   printf("%d", gpio_is_pulled_up(a));
-  // }
-  // printf("\n");
+    //========================================== DEBUGGING
+    // printf("Estado das GPIOs: ");
+    // for (size_t a = 2; a < 10; a++)
+    //     printf("%d", gpio_get(a));
+    // printf("\nGPIOs que são pulled down: ");
+    // for (size_t a = 2; a < 10; a++)
+    //     printf("%d", gpio_is_pulled_down(a));
+    // printf("\nGPIOs que são pulled up: ");
+    // for (size_t a = 2; a < 10; a++)
+    //     printf("%d", gpio_is_pulled_up(a));
+    // printf("\nDireção das GPIOs: ");
+    // for (size_t a = 2; a < 10; a++)
+    //     printf("%d", gpio_get_dir(a));
+    // printf("\n");
 }
