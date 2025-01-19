@@ -19,21 +19,22 @@ char KEY_MAP[16] = {
     '1', '2', '3', 'A',
     '4', '5', '6', 'B',
     '7', '8', '9', 'C',
-    '*', '0', '#', 'D'
-};
+    '*', '0', '#', 'D'};
 
 // Variáveis para máscaras e estado do teclado
 uint all_columns_mask = 0x0;
 uint column_mask[4];
 
 // Função para fazer o buzzer tocar
-void beep(int duration_ms) {
+void beep(int duration_ms)
+{
     absolute_time_t end_time = make_timeout_time_ms(duration_ms);
-    while (absolute_time_diff_us(get_absolute_time(), end_time) > 0) {
+    while (absolute_time_diff_us(get_absolute_time(), end_time) > 0)
+    {
         gpio_put(GPIO_BUZZER, 1);
-        sleep_us(500);  // Meio período em nível alto
+        sleep_us(500); // Meio período em nível alto
         gpio_put(GPIO_BUZZER, 0);
-        sleep_us(500);  // Meio período em nível baixo
+        sleep_us(500); // Meio período em nível baixo
     }
 }
 
@@ -85,7 +86,7 @@ char keypad_get_key()
     // Varredura das linhas
     for (row = 0; row < 4; row++)
     {
-        gpio_put(rows[row], 1);  // Ativar a linha atual
+        gpio_put(rows[row], 1); // Ativar a linha atual
         busy_wait_us(1000);     // Pequeno atraso para estabilizar a leitura
         cols = gpio_get_all() & all_columns_mask;
 
@@ -151,55 +152,60 @@ int main()
     stdio_init_all();
     init_hardware();
 
-    char caracter_press;
-
-    while (true)
+    if (!use_library)
     {
-        // Obter a tecla pressionada
-        caracter_press = keypad_get_key();
 
-        if (caracter_press)
+        char caracter_press;
+
+        while (true)
         {
-            printf("Tecla pressionada: %c\n", caracter_press);
+            // Obter a tecla pressionada
+            caracter_press = keypad_get_key();
 
-            // Laço de repetição para que ao manter pressionado as teclas A, B, C e D os LEDs acendam, já o # é para ligar o buzzer
-            if (caracter_press == 'A')
+            if (caracter_press)
             {
-                gpio_put(GPIO_LED_GREEN, 1);
+                printf("Tecla pressionada: %c\n", caracter_press);
+
+                // Laço de repetição para que ao manter pressionado as teclas A, B, C e D os LEDs acendam, já o # é para ligar o buzzer
+                if (caracter_press == 'A')
+                {
+                    gpio_put(GPIO_LED_GREEN, 1);
+                }
+                else if (caracter_press == 'B')
+                {
+                    gpio_put(GPIO_LED_BLUE, 1);
+                }
+                else if (caracter_press == 'C')
+                {
+                    gpio_put(GPIO_LED_RED, 1);
+                }
+                else if (caracter_press == 'D')
+                {
+                    gpio_put(GPIO_LED_GREEN, 1);
+                    gpio_put(GPIO_LED_BLUE, 1);
+                    gpio_put(GPIO_LED_RED, 1);
+                }
+                else if (caracter_press == '#')
+                {
+                    gpio_put(GPIO_BUZZER, 1);
+                    beep(500); // Toca o buzzer por 500ms
+                    sleep_ms(500);
+                }
             }
-            else if (caracter_press == 'B')
+            else
             {
-                gpio_put(GPIO_LED_BLUE, 1);
+                // Desligar todos os LEDs e o buzzer se nenhuma tecla estiver pressionada
+                gpio_put(GPIO_LED_GREEN, 0);
+                gpio_put(GPIO_LED_BLUE, 0);
+                gpio_put(GPIO_LED_RED, 0);
+                gpio_put(GPIO_BUZZER, 0);
             }
-            else if (caracter_press == 'C')
-            {
-                gpio_put(GPIO_LED_RED, 1);
-            }
-            else if (caracter_press == 'D')
-            {
-                gpio_put(GPIO_LED_GREEN, 1);
-                gpio_put(GPIO_LED_BLUE, 1);
-                gpio_put(GPIO_LED_RED, 1);
-            }
-            else if (caracter_press == '#')
-            {
-                gpio_put(GPIO_BUZZER, 1);
-                beep(500);  // Toca o buzzer por 500ms
-                sleep_ms(500);
-            }
+
+            busy_wait_us(500000); // Pequeno atraso entre leituras
         }
-        else
-        {
-            // Desligar todos os LEDs e o buzzer se nenhuma tecla estiver pressionada
-            gpio_put(GPIO_LED_GREEN, 0);
-            gpio_put(GPIO_LED_BLUE, 0);
-            gpio_put(GPIO_LED_RED, 0);
-            gpio_put(GPIO_BUZZER, 0);
-        }
-
-        busy_wait_us(500000); // Pequeno atraso entre leituras
-    } 
-
-    
+    }
+    else
+    {
+        //
+    }
 }
-
