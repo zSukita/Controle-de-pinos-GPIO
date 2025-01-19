@@ -9,7 +9,7 @@
 #define GPIO_LED_RED 13
 #define GPIO_BUZZER 21
 
-uint use_library = 1;
+uint use_library = 0;
 
 uint columns[4] = {6, 7, 8, 9};
 uint rows[4] = {2, 3, 4, 5};
@@ -131,20 +131,27 @@ void init_hardware()
     gpio_init(GPIO_BUZZER);
     gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
 
-    // Inicializar teclado
-    for (int i = 0; i < 4; i++)
+    if (!use_library) // condicional para uso da biblioteca keypadlib.h
     {
-        gpio_init(columns[i]);
-        gpio_set_dir(columns[i], GPIO_IN);
-        gpio_pull_down(columns[i]);
+        // Inicializar teclado
+        for (int i = 0; i < 4; i++)
+        {
+            gpio_init(columns[i]);
+            gpio_set_dir(columns[i], GPIO_IN);
+            gpio_pull_down(columns[i]);
 
-        gpio_init(rows[i]);
-        gpio_set_dir(rows[i], GPIO_OUT);
-        gpio_put(rows[i], 1);
+            gpio_init(rows[i]);
+            gpio_set_dir(rows[i], GPIO_OUT);
+            gpio_put(rows[i], 1);
+        }
+
+        // Inicializar máscaras do teclado
+        init_keypad_masks(columns);
     }
-
-    // Inicializar máscaras do teclado
-    init_keypad_masks(columns);
+    else
+    {
+        keypad_init();
+    }
 }
 
 int main()
