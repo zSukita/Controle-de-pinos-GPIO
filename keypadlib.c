@@ -1,3 +1,4 @@
+#include "keypadlib.h"
 #include "pico/stdlib.h"
 #include <stdio.h>
 
@@ -5,12 +6,12 @@
 #define NUM_ROWS 4
 #define NUM_KEYS 16
 
-static uint32_t keypad;
-static int key = -1;
-static uint keypress = 0xF0;
-static uint scancodes[NUM_ROWS] = {0x01, 0x02, 0x04, 0x08};
-
-void keypad_init()
+  static uint32_t keypad;
+  static int key = -1;
+  static uint8_t keypress = 0xF0;
+  static uint scancodes[NUM_ROWS] = {0x01, 0x02, 0x04, 0x08};
+ 
+void keypad_init() 
 {
   // inicializa as GPIO's - GPIO2 à GPIO9
   gpio_init_mask((0xFF << GPIO_STARTER_PIN));
@@ -42,7 +43,7 @@ void keypad_init()
   //     printf("%d", gpio_get_dir(a));
   // printf("\n");
 }
-
+ 
 int keypad_reader(uint8_t *keymap)
 {
   for (key = 0; key < NUM_ROWS; key++)
