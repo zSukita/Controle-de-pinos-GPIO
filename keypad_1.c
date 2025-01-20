@@ -1,14 +1,101 @@
+#include "keypadlib.h"
 #include <stdio.h>
 #include "pico/stdlib.h"
-#include "hardware/timer.h"
-#include "keypadlib.h"
 
-// Definição dos pinos GPIO
 #define GPIO_LED_GREEN 11
 #define GPIO_LED_BLUE 12
 #define GPIO_LED_RED 13
 #define GPIO_BUZZER 21
 
+void init_hardware()
+{
+    // Configuração dos LEDs como saída
+    gpio_init(GPIO_LED_BLUE);
+    gpio_set_dir(GPIO_LED_BLUE, GPIO_OUT);
+    gpio_init(GPIO_LED_RED);
+    gpio_set_dir(GPIO_LED_RED, GPIO_OUT);
+    gpio_init(GPIO_LED_GREEN);
+    gpio_set_dir(GPIO_LED_GREEN, GPIO_OUT);
+
+    // Configuração do buzzer como saída
+    gpio_init(GPIO_BUZZER);
+    gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
+
+    keypad_init();
+}
+
+// Função para fazer o buzzer tocar
+void beep(int duration_ms)
+{
+    absolute_time_t end_time = make_timeout_time_ms(duration_ms);
+    while (absolute_time_diff_us(get_absolute_time(), end_time) > 0)
+    {
+        gpio_put(GPIO_BUZZER, 1);
+        sleep_us(500); // Meio período em nível alto
+        gpio_put(GPIO_BUZZER, 0);
+        sleep_us(500); // Meio período em nível baixo
+    }
+}
+
+int main()
+{
+    stdio_init_all();
+    uint8_t keymap[16] = {0x28, 0x11, 0x21, 0x41, 0x12, 0x22, 0x42, 0x14, 0x24, 0x44, 0x81, 0x82, 0x84, 0x88, 0x18, 0x48};
+
+    init_hardware();
+
+    int key;
+
+    while (true)
+    {
+        key = keypad_reader(keymap);
+        if (key != -1)
+        {
+            // printf("[DECIMAL] %d [HEXADECIMAL] %x [BINARIO] %04b\n", key, key, key); // DEBUGGING
+            printf("Tecla pressionada: %d\n", key);
+            sleep_ms(100); // ajuste deboucing
+
+            switch (key)
+            {
+            case 10:
+                gpio_put(GPIO_LED_GREEN, 1);
+                sleep_ms(100);
+                break;
+            case 11:
+                gpio_put(GPIO_LED_BLUE, 1);
+                sleep_ms(100);
+                break;
+            case 12:
+                gpio_put(GPIO_LED_RED, 1);
+                sleep_ms(100);
+                break;
+            case 13:
+                gpio_put(GPIO_LED_GREEN, 1);
+                gpio_put(GPIO_LED_BLUE, 1);
+                gpio_put(GPIO_LED_RED, 1);
+                sleep_ms(100);
+                break;
+            case 15:
+                gpio_put(GPIO_BUZZER, 1);
+                beep(500); // Toca o buzzer por 500ms
+                sleep_ms(500);
+            default:
+                break;
+            }
+        }
+        else
+        {
+            gpio_put(GPIO_LED_GREEN, 0);
+            gpio_put(GPIO_LED_BLUE, 0);
+            gpio_put(GPIO_LED_RED, 0);
+            gpio_put(GPIO_BUZZER, 0);
+        }
+        //    break; // DEBUGGING
+    }
+}
+
+// CÓDIGO ATUAL ORIGINAL /////////////////////////////
+/*
 uint columns[4] = {6, 7, 8, 9};
 uint rows[4] = {2, 3, 4, 5};
 
@@ -196,8 +283,6 @@ int main()
         }
 
         busy_wait_us(500000); // Pequeno atraso entre leituras
-    } 
-
-    
+    }
 }
-
+*/

@@ -47,7 +47,7 @@ pico_enable_stdio_usb(keypad_1 1)
 # Add the standard library to the build
 target_link_libraries(keypad_1
         pico_stdlib
-        hardware_timer)
+         )
 
 # Add the standard include files to the build
 target_include_directories(keypad_1 PRIVATE
@@ -60,4 +60,3 @@ target_link_libraries(keypad_1
         )
 
 pico_add_extra_outputs(keypad_1)
-
