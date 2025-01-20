@@ -1,42 +1,40 @@
 #include "keypadlib.h"
 #include <stdio.h>
 #include "pico/stdlib.h"
-// #include "hardware/timer.h"
 
 #define GPIO_LED_GREEN 11
 #define GPIO_LED_BLUE 12
 #define GPIO_LED_RED 13
 #define GPIO_BUZZER 21
 
-
 void init_hardware()
 {
     // Configuração dos LEDs como saída
-    // gpio_init(GPIO_LED_BLUE);
-    // gpio_set_dir(GPIO_LED_BLUE, GPIO_OUT);
-    // gpio_init(GPIO_LED_RED);
-    // gpio_set_dir(GPIO_LED_RED, GPIO_OUT);
-    // gpio_init(GPIO_LED_GREEN);
-    // gpio_set_dir(GPIO_LED_GREEN, GPIO_OUT);
+    gpio_init(GPIO_LED_BLUE);
+    gpio_set_dir(GPIO_LED_BLUE, GPIO_OUT);
+    gpio_init(GPIO_LED_RED);
+    gpio_set_dir(GPIO_LED_RED, GPIO_OUT);
+    gpio_init(GPIO_LED_GREEN);
+    gpio_set_dir(GPIO_LED_GREEN, GPIO_OUT);
 
-    // // Configuração do buzzer como saída
-    // gpio_init(GPIO_BUZZER);
-    // gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
+    // Configuração do buzzer como saída
+    gpio_init(GPIO_BUZZER);
+    gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
 
     keypad_init();
-} 
+}
 
 // Função para fazer o buzzer tocar
 void beep(int duration_ms)
 {
-    // absolute_time_t end_time = make_timeout_time_ms(duration_ms);
-    // while (absolute_time_diff_us(get_absolute_time(), end_time) > 0)
-    // {
-    //     gpio_put(GPIO_BUZZER, 1);
-    //     sleep_us(500); // Meio período em nível alto
-    //     gpio_put(GPIO_BUZZER, 0);
-    //     sleep_us(500); // Meio período em nível baixo
-    // }
+    absolute_time_t end_time = make_timeout_time_ms(duration_ms);
+    while (absolute_time_diff_us(get_absolute_time(), end_time) > 0)
+    {
+        gpio_put(GPIO_BUZZER, 1);
+        sleep_us(500); // Meio período em nível alto
+        gpio_put(GPIO_BUZZER, 0);
+        sleep_us(500); // Meio período em nível baixo
+    }
 }
 
 int main()
@@ -95,7 +93,6 @@ int main()
         //    break; // DEBUGGING
     }
 }
-
 
 // CÓDIGO ATUAL ORIGINAL /////////////////////////////
 /*
